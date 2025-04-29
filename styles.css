@@ -1,0 +1,142 @@
+/* Custom Colors */
+:root {
+    --peach: #FFDAB9;
+    --ivory: #FFFFF0;
+    --ivory-light: #F5F5F5;
+    --sage-green: #A8B5A2;
+}
+
+/* Fonts */
+.font-poppins {
+    font-family: 'Poppins', sans-serif;
+}
+
+.font-cormorant {
+    font-family: 'Cormorant Garamond', serif;
+}
+
+/* Loading Animation */
+.envelope-animation {
+    width: 500px;
+    height: 350px;
+    position: relative;
+    perspective: 1000px;
+}
+
+.envelope-flap {
+    width: 100%;
+    height: 50%;
+    background: var(--peach);
+    position: absolute;
+    top: 0;
+    transform-origin: top;
+    transition: transform 2s ease;
+    border: 2px solid var(--ivory);
+    clip-path: polygon(0 0, 50% 100%, 100% 0);
+}
+
+.envelope-body {
+    width: 100%;
+    height: 100%;
+    background: var(--peach);
+    position: absolute;
+    border: 2px solid var(--ivory);
+}
+
+.envelope-inside {
+    width: 100%;
+    height: 100%;
+    background: var(--ivory);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: -1;
+}
+
+.petals {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('petals.png') repeat;
+    animation: fall 5s linear infinite;
+}
+
+/* Note: petals.png should be a transparent PNG with scattered peony petals (e.g., 600x600px for sharper display with larger envelope).
+   Source from https://www.rawpixel.com/image/5990567/png-pink-peony-flower-sticker or PNGWing, or create using Canva. */
+
+@keyframes fall {
+    0% { transform: translateY(-150px); opacity: 1; }
+    100% { transform: translateY(500px); opacity: 0; }
+}
+
+.open .envelope-flap {
+    transform: rotateX(-180deg);
+}
+
+/* Parallax Effect */
+.parallax {
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Note: floral-bg.png should be a transparent, seamless PNG with peony/vine patterns (e.g., 1920x1080px).
+   Source from https://www.rawpixel.com/image/2452179/free-illustration-png-flower-wedding-png or Vecteezy, or create using Canva. */
+
+/* Gallery Hover Effect */
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.gallery-item img {
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+.gallery-item .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.6);
+    color: var(--ivory);
+    padding: 10px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-item:hover .overlay {
+    opacity: 1;
+}
+
+/* Fade-in Animation */
+.animate-fade-in {
+    animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    .envelope-animation {
+        width: 350px;
+        height: 250px;
+    }
+
+    .parallax {
+        background-attachment: scroll;
+    }
+}
