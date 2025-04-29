@@ -1,0 +1,161 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shamya & Sowmi Wedding Invitation</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body class="bg-ivory font-poppins">
+    <!-- Loading Animation -->
+    <div id="loading" class="fixed inset-0 bg-peach flex items-center justify-center z-50">
+        <div class="envelope-animation">
+            <div class="envelope-flap"></div>
+            <div class="envelope-body"></div>
+            <div class="envelope-inside">
+                <h2 class="text-3xl font-cormorant text-ivory">Shamya & Sowmi</h2>
+            </div>
+            <div class="petals"></div>
+        </div>
+    </div>
+
+    <!-- Sticky Navigation -->
+    <nav class="fixed top-0 w-full bg-peach bg-opacity-90 z-40 shadow-md">
+        <div class="max-w-6xl mx-auto flex justify-between items-center py-4 px-6">
+            <!--<img src="monogram.svg" onerror="this.src='monogram.png'" alt="S&S Monogram" class="h-12">-->
+            <ul class="flex space-x-6 text-ivory">
+                <li><a href="#home" class="hover:text-ivory-light">Home</a></li>
+                <li><a href="#story" class="hover:text-ivory-light">Our Story</a></li>
+                <li><a href="#details" class="hover:text-ivory-light">Details</a></li>
+                <li><a href="#rsvp" class="hover:text-ivory-light">RSVP</a></li>
+                <li><a href="#gallery" class="hover:text-ivory-light">Gallery</a></li>
+                <li><a href="#directions" class="hover:text-ivory-light">Directions</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div id="main-content" class="hidden">
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex flex-col items-center justify-center text-center bg-cover bg-center" style="background-image: url('wedding-bg.jpg')">
+            <h1 class="text-5xl md:text-7xl font-cormorant text-peach animate-fade-in">Shamya & Sowmi</h1>
+            <p class="text-xl md:text-2xl text-ivory mt-4 animate-fade-in">Are Getting Married!</p>
+            <p class="text-lg text-ivory mt-2 animate-fade-in">November 16, 2025 | Community Centre-I, New Town, Kolkata</p>
+            <div id="countdown" class="mt-6 text-ivory animate-fade-in">
+                <div class="flex space-x-4 justify-center">
+                    <div><span id="days" class="text-3xl font-bold"></span><br>Days</div>
+                    <div><span id="hours" class="text-3xl font-bold"></span><br>Hours</div>
+                    <div><span id="minutes" class="text-3xl font-bold"></span><br>Minutes</div>
+                    <div><span id="seconds" class="text-3xl font-bold"></span><br>Seconds</div>
+                </div>
+            </div>
+            <a href="#details" class="mt-6 px-6 py-3 bg-peach text-ivory rounded-full hover:bg-ivory hover:text-peach transition animate-fade-in">View Details</a>
+        </section>
+
+        <!-- Our Story -->
+        
+        <section id="details" class="py-16 bg-peach text-ivory text-center"> 
+            <h2 class="text-4xl font-cormorant text-peach animate-fade-in">Our Story</h2>
+            <p class="max-w-2xl mx-auto mt-4 text-gray-700">Our journey began in the bustling corridors of our office, where Shamya and Sowmi became fast friends over shared projects and coffee breaks. Life took us to different paths when we changed offices, and we lost touch for a while. Fate had other plans, bringing us back together years later. What started as a rekindled friendship soon blossomed into something more, leading us to this moment. Join us as we celebrate our love and the beautiful journey ahead.</p>
+        </section>
+
+        <!-- Event Details -->
+        <section id="story" class="py-16 bg-ivory text-center parallax" style="background-image: url('floral-bg.png')">
+            <h2 class="text-4xl font-cormorant text-center animate-fade-in">Event Details</h2>
+            <div class="max-w-2xl mx-auto mt-8 text-center">
+                <p class="text-lg">Join us for a joyous wedding celebration on November 16, 2025, at 7:00 PM at Community Centre-I, Open Stage - LAWN, Action Area-IC, Near Biswa Bangla Gate, New Town, Kolkata.</p>
+                <p class="mt-4">We’re thrilled to share this special evening with you, filled with love, music, and festivity as we unite in marriage and celebrate together.</p>
+                <a href="https://nkdamar.org/hallBookingDetails/28" target="_blank" class="text-ivory underline">Venue Details</a>
+            </div>
+        </section>
+
+        <!-- RSVP -->
+        <section id="rsvp" class="py-16 bg-ivory text-center">
+            <h2 class="text-4xl font-cormorant text-peach animate-fade-in">RSVP</h2>
+            <p class="max-w-xl mx-auto mt-4 text-gray-700">Kindly let us know if you’ll be joining us by November 1, 2025.</p>
+            <div class="max-w-md mx-auto mt-6">
+                <input id="name" type="text" placeholder="Your Name" class="w-full p-3 mb-4 border rounded">
+                <input id="guests" type="number" placeholder="Number of Guests" class="w-full p-3 mb-4 border rounded">
+                <button id="rsvp-submit" class="px-6 py-3 bg-peach text-ivory rounded-full hover:bg-ivory hover:text-peach transition">Submit</button>
+                <p id="rsvp-message" class="mt-4 hidden text-green-600">Thank you for your RSVP!</p>
+            </div>
+        </section>
+
+        <!-- Gallery -->
+        <section id="gallery" class="py-16 bg-peach text-ivory text-center">
+            <h2 class="text-4xl font-cormorant animate-fade-in">Gallery</h2>
+            <div class="max-w-4xl mx-auto mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="gallery-item">
+                    <img src="couple1.jpg" alt="Couple Photo" class="w-full h-64 object-cover rounded">
+                    <div class="overlay">Our Engagement</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="couple2.jpg" alt="Couple Photo" class="w-full h-64 object-cover rounded">
+                    <div class="overlay">First Trip Together</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="couple3.jpg" alt="Couple Photo" class="w-full h-64 object-cover rounded">
+                    <div class="overlay">Moments We Cherish</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Directions -->
+        <section id="directions" class="py-16 bg-ivory text-center">
+            <h2 class="text-4xl font-cormorant text-peach animate-fade-in">Directions</h2>
+            <p class="max-w-xl mx-auto mt-4 text-gray-700">Community Centre-I is located near Biswa Bangla Gate in New Town, Kolkata. Click below for directions.</p>
+            <a href="https://www.google.com/maps/dir//HFH9%2BCRG,+CC+Block,+Action+Area+I,+Newtown,+New+Town,+West+Bengal+700156/@22.5785539,88.3871863,12z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3a0275e8ea1061e7:0x5f8d7007e32b95e8!2m2!1d88.4695879!2d22.5785749" target="_blank" class="mt-6 inline-block px-6 py-3 bg-peach text-ivory rounded-full hover:bg-ivory hover:text-peach transition">Get Directions</a>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-8 bg-peach text-ivory text-center">
+            <p>Shamya & Sowmi | November 16, 2025</p>
+            <p>Designed with love</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
