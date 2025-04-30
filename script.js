@@ -17,22 +17,40 @@ document.addEventListener('DOMContentLoaded', () => {
     // RSVP form handling
     const rsvpForm = document.getElementById('rsvp-form');
     const rsvpMessage = document.getElementById('rsvp-message');
+    const ipField = document.getElementById('ip-address');
+    const deviceField = document.getElementById('device-info');
+
+    // Get IP address using ipify API
+    fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => {
+            ipField.value = data.ip || "Unknown";
+        })
+        .catch(error => {
+            console.error('Error fetching IP:', error);
+            ipField.value = "Unknown";
+        });
+
+    // Get device info (user agent)
+    deviceField.value = navigator.userAgent || "Unknown";
 
     rsvpForm.addEventListener('submit', (e) => {
         e.preventDefault(); // Prevent default form submission
 
         const name = document.getElementById('name').value;
         const guests = document.getElementById('guests').value;
+        const ipAddress = ipField.value;
+        const deviceInfo = deviceField.value;
 
         if (name && guests) {
             // Send data to Google Apps Script
             fetch('https://script.google.com/macros/s/AKfycbztFMn2Iia74xeNk-MRmwtfkn4UDewlU624IEKPhjDSd0ApESs55-yFNODPo_g4PUxM/exec', {
                 method: 'POST',
-                mode: 'no-cors', // Required for Google Apps Script from static sites
+                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: `name=${encodeURIComponent(name)}&guests=${encodeURIComponent(guests)}`
+                body: `name=${encodeURIComponent(name)}&guests=${encodeURIComponent(guests)}&ip=${encodeURIComponent(ipAddress)}&device=${encodeURIComponent(deviceInfo)}`
             })
             .then(() => {
                 // Show success message

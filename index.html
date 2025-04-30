@@ -110,7 +110,7 @@
                 <a href="https://nkdamar.org/hallBookingDetails/28" target="_blank" class="text-ivory underline">Venue Details</a>
             </div>
         </section>
-
+    
         <!-- RSVP -->
         <section id="rsvp" class="py-16 bg-ivory text-center">
             <h2 class="text-4xl font-cormorant text-peach animate-fade-in">RSVP</h2>
@@ -118,11 +118,13 @@
             <form id="rsvp-form" class="max-w-md mx-auto mt-6">
                 <input id="name" type="text" placeholder="Your Name" class="w-full p-3 mb-4 border rounded" required>
                 <input id="guests" type="number" placeholder="Number of Guests" class="w-full p-3 mb-4 border rounded" required>
+                <input id="ip-address" name="ip" type="hidden">
+                <input id="device-info" name="device" type="hidden">
                 <button type="submit" id="rsvp-submit" class="px-6 py-3 bg-peach text-ivory rounded-full hover:bg-ivory hover:text-peach transition">Submit</button>
                 <p id="rsvp-message" class="mt-4 hidden text-green-600">Thank you for your RSVP!</p>
             </form>
         </section>
-        
+
         <!-- Gallery -->
         <section id="gallery" class="py-16 bg-peach text-ivory text-center">
             <h2 class="text-4xl font-cormorant animate-fade-in">Gallery</h2>
