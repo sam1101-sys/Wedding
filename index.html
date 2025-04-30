@@ -115,14 +115,14 @@
         <section id="rsvp" class="py-16 bg-ivory text-center">
             <h2 class="text-4xl font-cormorant text-peach animate-fade-in">RSVP</h2>
             <p class="max-w-xl mx-auto mt-4 text-gray-700">Kindly let us know if you’ll be joining us by November 1, 2025.</p>
-            <div class="max-w-md mx-auto mt-6">
-                <input id="name" type="text" placeholder="Your Name" class="w-full p-3 mb-4 border rounded">
-                <input id="guests" type="number" placeholder="Number of Guests" class="w-full p-3 mb-4 border rounded">
-                <button id="rsvp-submit" class="px-6 py-3 bg-peach text-ivory rounded-full hover:bg-ivory hover:text-peach transition">Submit</button>
+            <form id="rsvp-form" class="max-w-md mx-auto mt-6">
+                <input id="name" type="text" placeholder="Your Name" class="w-full p-3 mb-4 border rounded" required>
+                <input id="guests" type="number" placeholder="Number of Guests" class="w-full p-3 mb-4 border rounded" required>
+                <button type="submit" id="rsvp-submit" class="px-6 py-3 bg-peach text-ivory rounded-full hover:bg-ivory hover:text-peach transition">Submit</button>
                 <p id="rsvp-message" class="mt-4 hidden text-green-600">Thank you for your RSVP!</p>
-            </div>
+            </form>
         </section>
-
+        
         <!-- Gallery -->
         <section id="gallery" class="py-16 bg-peach text-ivory text-center">
             <h2 class="text-4xl font-cormorant animate-fade-in">Gallery</h2>
