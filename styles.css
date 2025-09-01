@@ -15,6 +15,11 @@
     font-family: 'Cormorant Garamond', serif;
 }
 
+/* Navigation Background */
+nav {
+    background-color: #FFFFFF; /* White background for navigation */
+}
+
 /* Loading Animation */
 .envelope-animation {
     width: 500px;
